@@ -40,10 +40,6 @@ exports.getAlltask = async (req, res) => {
   try {
     const allTasks = await Task.find({});
 
-    if (allTasks.length === 0) {
-      return res.status(200).json({ message: "No tasks added yet" });
-    }
-
     res.status(200).json(allTasks);
   } catch (error) {
     res.status(500).json({ error: error.message });

@@ -1,20 +1,20 @@
 const Joi = require("joi");
 
-// Define validation schema
+// ✅ Joi schema
 const taskSchema = Joi.object({
   task: Joi.string().required().messages({
     "string.base": "Task must be a string",
     "string.empty": "Task is required",
     "any.required": "Task is required",
   }),
-  date: Joi.date().greater("now").required().messages({
+  date: Joi.date().required().messages({
     "date.base": "Date must be a valid date",
-    "date.greater": "Date must be greater than today",
+    "date.min": "Date must not be in the past",
     "any.required": "Date is required",
   }),
 });
 
-// Middleware function
+// ✅ Middleware function
 const validateTask = (req, res, next) => {
   const { error } = taskSchema.validate(req.body, { abortEarly: false });
 
