@@ -2,12 +2,14 @@ const express = require("express");
 const dotenv = require("dotenv"); //package to get environment variables
 const connectDB = require("./config/database"); //
 const taskRoutes = require("./routes/taskRoutes");
+const cors = require("cors"); //
+
+const app = express();
+app.use(cors());
 
 dotenv.config(); // load the variables from .env file
 
 connectDB();
-
-const app = express();
 
 app.use(express.json()); // get the request in the json format
 app.use("/api/tasks", taskRoutes);
