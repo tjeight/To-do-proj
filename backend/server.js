@@ -1,12 +1,15 @@
 const express = require("express")
 const dotenv = require("dotenv") //package to get environment variables
-
+const connectDB = require("./config/database"); // 
 
 dotenv.config(); // load the variables from .env file
 
 
 
 
+
+
+connectDB();
 
 const app = express();
 
