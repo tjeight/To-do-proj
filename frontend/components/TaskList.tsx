@@ -24,11 +24,12 @@ const TaskList: React.FC = () => {
       });
       setTasks((prevTasks) => [...prevTasks, response.data]);
       setTaskInput("");
-    } catch (err: any) {
-      console.error(
-        "Error adding task:",
-        err.response?.data?.error || err.message
-      );
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        console.error("Error adding task:", err.message);
+      } else {
+        console.error("Unexpected error:", err);
+      }
     }
   };
 
@@ -37,11 +38,12 @@ const TaskList: React.FC = () => {
     try {
       const response = await api.get<Task[]>("/tasks");
       setTasks(response.data);
-    } catch (err: any) {
-      console.error(
-        "Error fetching tasks:",
-        err.response?.data?.error || err.message
-      );
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        console.error("Error fetching tasks:", err.message);
+      } else {
+        console.error("Unexpected error:", err);
+      }
     }
   };
 
@@ -54,11 +56,12 @@ const TaskList: React.FC = () => {
     try {
       await api.delete(`/tasks/${id}`);
       setTasks((prevTasks) => prevTasks.filter((task) => task._id !== id));
-    } catch (err: any) {
-      console.error(
-        "Error deleting task:",
-        err.response?.data?.error || err.message
-      );
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        console.error("Error deleting task:", err.message);
+      } else {
+        console.error("Unexpected error:", err);
+      }
     }
   };
 
