@@ -51,6 +51,18 @@ const TaskList: React.FC = () => {
     fetchTasks();
   }, []);
 
+  const removeTaskFun = async (id: string) => {
+    try {
+      await api.delete(`/tasks/${id}`);
+      setTasks((prevTasks) => prevTasks.filter((task) => task._id !== id));
+    } catch (err: any) {
+      console.error(
+        "Error deleting task:",
+        err.response?.data?.error || err.message
+      );
+    }
+  };
+
   return (
     <div>
       <div className="flex justify-center items-center mt-10">
@@ -70,9 +82,17 @@ const TaskList: React.FC = () => {
         <p className="text-2xl text-center mt-3">All Tasks</p>
         <ul className="text-center mt-2">
           {tasks.map((task) => (
-            <li key={task._id}>
-              {task.task} - {new Date(task.date).toLocaleDateString()}
-            </li>
+            <div className="flex justify-center gap-4 mt-2" key={task._id}>
+              <li>
+                {task.task} - {new Date(task.date).toLocaleDateString()}
+              </li>
+              <button
+                onClick={() => removeTaskFun(task._id)}
+                className="text-green-600 hover:text-green-800"
+              >
+                ✅
+              </button>
+            </div>
           ))}
         </ul>
       </div>
